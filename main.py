@@ -14,14 +14,17 @@ class Motors:
     def stop(self):
         self.__driver.MotorStop(0)
         self.__driver.MotorStop(1)
-        
+
 from sensors_array import SensorsArray
 from motor_driver import MotorDriver
-from conroller import Controller
+from controller import Controller
 
 sensors = SensorsArray()
 motors = Motors(MotorDriver)
-controller = Controller(25)
-while(True):
-    motors.set(controller.process(compute_error(sensors.value())))
-    
+controller = Controller(10)
+
+try:
+    while(True):
+        motors.set(controller.process(compute_error(sensors.value())))
+except:
+    motors.stop()
