@@ -1,15 +1,22 @@
-def error(sensors_value):
+def compute_error(sensors_value):
     weights = [-4, -3, -2, -1, 1, 2, 3, 4]
     weighted = [weights[ind]*value for ind, value in enumerate(sensors_value) if value]
     if len(weighted):
         return sum(weighted)/(4*len(weighted))
     return None
 
+class Controller:
+    def __init__(self):
+        self.speed = 15
+        self.k = 15
+    def process(self, error_value):
+        return (self.speed+self.k*error_value,self.speed-self.k*error_value)
+        
 def controller(error_value):
     if error_value is None:
         return None
-    speed = 20
-    k = 10
+    speed = 15
+    k = 15
     return (speed+k*error_value,speed-k*error_value)
 
 class Motors:
@@ -27,11 +34,11 @@ from motor_driver import MotorDriver
 
 sensors = SensorsArray()
 motors = Motors(MotorDriver)
+controller = Controller()
 while(True):
-    error_value = error(sensors.value())
-    speeds = controller(error_value)
-    print(speeds)
-    if speeds is not None:
-        motors.set(speeds)
+    error_value = compute_error(sensors.value())
+    if error_value is not None:
+        motors.set(controller.process(error_value))
     else:
         motors.stop()
+    
