@@ -5,13 +5,6 @@ def compute_error(sensors_value):
         return sum(weighted)/(4*len(weighted))
     return None
 
-class Controller:
-    def __init__(self):
-        self.speed = 15
-        self.k = 15
-    def process(self, error_value):
-        return (self.speed+self.k*error_value,self.speed-self.k*error_value)
-
 class Motors:
     def __init__(self, motor_driver):
         self.__driver = motor_driver()
@@ -24,14 +17,11 @@ class Motors:
         
 from sensors_array import SensorsArray
 from motor_driver import MotorDriver
+from conroller import Controller
 
 sensors = SensorsArray()
 motors = Motors(MotorDriver)
-controller = Controller()
+controller = Controller(25)
 while(True):
-    error_value = compute_error(sensors.value())
-    if error_value is not None:
-        motors.set(controller.process(error_value))
-    else:
-        motors.stop()
+    motors.set(controller.process(compute_error(sensors.value())))
     
