@@ -21,7 +21,7 @@ from controller import Controller
 
 sensors = SensorsArray()
 motors = Motors(MotorDriver)
-controller = Controller(speed=10,gain=3)
+controller = Controller(speed=15,gain=5)
 
 try:
     while(True):
