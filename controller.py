@@ -4,4 +4,4 @@ class Controller:
     def process(self, error):
         if error is None:
             return (0, 0)
-        return (self.__speed, self.__speed)
+        return (self.__speed*(1+error), self.__speed*(1-error))
