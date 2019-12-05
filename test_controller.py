@@ -32,3 +32,11 @@ def test_if_keep_going_when_line_disappears(controller):
     arbitrary_error = 0.39
     old_speed = controller.process(arbitrary_error)
     assert old_speed == controller.process(None)
+
+def test_if_rotates_when_line_disappears_on_outer_sensor(controller):
+    line_on_outer_right = 1
+    controller.process(line_on_outer_right)
+    controller.process(None)
+    (left, right) = controller.process(None)
+    assert left == -right
+    assert left > right
