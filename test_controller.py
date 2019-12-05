@@ -27,3 +27,8 @@ def test_if_controller_is_linear():
     (left, right) = controller.process(error)
     assert left == speed + gain * error
     assert right == speed - gain * error
+
+def test_if_keep_going_when_line_disappears(controller):
+    arbitrary_error = 0.39
+    old_speed = controller.process(arbitrary_error)
+    assert old_speed == controller.process(None)
