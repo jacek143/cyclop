@@ -11,13 +11,6 @@ class Controller:
         self.k = 15
     def process(self, error_value):
         return (self.speed+self.k*error_value,self.speed-self.k*error_value)
-        
-def controller(error_value):
-    if error_value is None:
-        return None
-    speed = 15
-    k = 15
-    return (speed+k*error_value,speed-k*error_value)
 
 class Motors:
     def __init__(self, motor_driver):
