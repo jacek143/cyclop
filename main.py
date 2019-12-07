@@ -9,11 +9,16 @@ class Motors:
     def __init__(self, motor_driver):
         self.__driver = motor_driver()
     def set(self, speeds):
-        self.__driver.MotorRun(1, 'forward', speeds[0])
-        self.__driver.MotorRun(0, 'forward', speeds[1])
+        self.__run_motor_with_speed(1, speeds[0])
+        self.__run_motor_with_speed(0, speeds[1])
     def stop(self):
         self.__driver.MotorStop(0)
         self.__driver.MotorStop(1)
+    def __run_motor_with_speed(motor, speed):
+        self.__driver.MotorRun(motor, self.__word(speed), abs(speed))
+    def __word(self, speed):
+        return 'forward' if speed > 0 else 'backward'
+
 
 from sensors_array import SensorsArray
 from motor_driver import MotorDriver
