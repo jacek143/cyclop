@@ -14,7 +14,7 @@ class Motors:
     def stop(self):
         self.__driver.MotorStop(0)
         self.__driver.MotorStop(1)
-    def __run_motor_with_speed(motor, speed):
+    def __run_motor_with_speed(self, motor, speed):
         self.__driver.MotorRun(motor, self.__word(speed), abs(speed))
     def __word(self, speed):
         return 'forward' if speed > 0 else 'backward'
